@@ -59,6 +59,7 @@ dependencies {
     compile 'org.webjars:bootstrap:3.3.7'
     compile 'org.webjars:jquery:3.3.1-1'
     compile 'org.webjars:font-awesome:4.7.0'
+    compile 'mysql:mysql-connector-java'
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile group: 'junit', name: 'junit', version: '4.12'
     

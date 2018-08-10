@@ -2,7 +2,9 @@ package mx.com.xisco.persistence.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,7 +25,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -53,9 +58,45 @@ public class User implements Serializable {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+    
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "user")
+    private Zona zona;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuarioAsignado")
+    private List<Ticket> tickets;
+    
+    //Socios
+    private String datosDomicilio;
+    
+    //Proveedor
+    private String razonSocial;
+    
+    private String rfc;
+    
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_direccion", referencedColumnName="id_direccion", nullable = false)
+    private Direccion direccion;
+    
+    private String nombreCompletoRepresentante;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Telefono> telefonos;
+    
+    private String correo;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_areas_servicios", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_area_servicio", referencedColumnName = "id_area_servicio"))
+    private List<AreaServicio> areasServicios;
+    
+    private String comentario;
+    
+    //administrador
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "administrador")
+    private BienInmueble bienInmueble;
+    
 
     public User() {
         enabled = true;
@@ -152,5 +193,103 @@ public class User implements Serializable {
     public boolean isEnabled() {
         return enabled;
     }
+
+	public Zona getZona() {
+		return zona;
+	}
+
+	public void setZona(Zona zona) {
+		this.zona = zona;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public String getDatosDomicilio() {
+		return datosDomicilio;
+	}
+
+	public void setDatosDomicilio(String datosDomicilio) {
+		this.datosDomicilio = datosDomicilio;
+	}
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public String getRfc() {
+		return rfc;
+	}
+
+	public void setRfc(String rfc) {
+		this.rfc = rfc;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getNombreCompletoRepresentante() {
+		return nombreCompletoRepresentante;
+	}
+
+	public void setNombreCompletoRepresentante(String nombreCompletoRepresentante) {
+		this.nombreCompletoRepresentante = nombreCompletoRepresentante;
+	}
+
+	public List<Telefono> getTelefonos() {
+		return telefonos;
+	}
+
+	public void setTelefonos(List<Telefono> telefonos) {
+		this.telefonos = telefonos;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public List<AreaServicio> getAreasServicios() {
+		return areasServicios;
+	}
+
+	public void setAreasServicios(List<AreaServicio> areasServicios) {
+		this.areasServicios = areasServicios;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public BienInmueble getBienInmueble() {
+		return bienInmueble;
+	}
+
+	public void setBienInmueble(BienInmueble bienInmueble) {
+		this.bienInmueble = bienInmueble;
+	}
+    
+    
 
 }
