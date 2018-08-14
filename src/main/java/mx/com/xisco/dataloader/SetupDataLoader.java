@@ -13,12 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import mx.com.xisco.persistence.model.Privilege;
-import mx.com.xisco.persistence.model.Role;
-import mx.com.xisco.persistence.model.User;
-import mx.com.xisco.persistence.repository.PrivilegeRepository;
-import mx.com.xisco.persistence.repository.RoleRepository;
-import mx.com.xisco.persistence.repository.UserRepository;
+import mx.com.xisco.persistence.model.Privilegio;
+import mx.com.xisco.persistence.model.Rol;
+import mx.com.xisco.persistence.model.Usuario;
+import mx.com.xisco.persistence.repository.PrivilegioRepository;
+import mx.com.xisco.persistence.repository.RolRepository;
+import mx.com.xisco.persistence.repository.UsuarioRepository;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -26,13 +26,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private boolean alreadySetup = false;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RolRepository rolRepository;
 
     @Autowired
-    private PrivilegeRepository privilegeRepository;
+    private PrivilegioRepository privilegioRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,42 +62,42 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public final Privilege createPrivilegeIfNotFound(final String name) {
-        Optional<Privilege> optPrivilege = privilegeRepository.findByName(name);
-        Privilege privilege = optPrivilege.orElse(new Privilege());
-        if (!optPrivilege.isPresent()) {
-            privilege.setName(name);
-            privilege = privilegeRepository.save(privilege);
+    public final Privilegio createPrivilegeIfNotFound(final String nombre) {
+        Optional<Privilegio> optPrivilegio = privilegioRepository.findByNombre(nombre);
+        Privilegio privilegio = optPrivilegio.orElse(new Privilegio());
+        if (!optPrivilegio.isPresent()) {
+        	privilegio.setNombre(nombre);
+        	privilegio = privilegioRepository.save(privilegio);
         }
-        return privilege;
+        return privilegio;
     }
 
     @Transactional
-    public final Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
-        Optional<Role> optRole = roleRepository.findByName(name);
-        Role role = optRole.orElse(new Role());
+    public final Rol createRoleIfNotFound(final String nombre, final Collection<Privilegio> privilegios) {
+        Optional<Rol> optRole = rolRepository.findByNombre(nombre);
+        Rol role = optRole.orElse(new Rol());
         if (!optRole.isPresent()) {
-            role.setName(name);
-            role.setPrivileges(privileges);
-            role = roleRepository.save(role);
+            role.setNombre(nombre);
+            role.setPrivilegios(privilegios);
+            role = rolRepository.save(role);
         }
 
         return role;
     }
 
     @Transactional
-    public final User createUserIfNotFound(final String username, final String firstName, final String lastName, final String password, final Collection<Role> roles) {
-        Optional<User> optUser = userRepository.findByUsername(username);
-        User user = optUser.orElse(new User());
-        if (!optUser.isPresent()) {
-            user.setUsername(username);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setPassword(passwordEncoder.encode(password));
-            user.setRoles(roles);
-            user = userRepository.save(user);
+    public final Usuario createUserIfNotFound(final String usuario, final String nombre, final String apellidoPaterno, final String contrasenia, final Collection<Rol> roles) {
+        Optional<Usuario> optUsuario = usuarioRepository.findByUsuario(usuario);
+        Usuario usuarioNuevo = optUsuario.orElse(new Usuario());
+        if (!optUsuario.isPresent()) {
+        	usuarioNuevo.setUsuario(usuario);
+        	usuarioNuevo.setNombre(nombre);
+        	usuarioNuevo.setApellidoPatarno(apellidoPaterno);
+        	usuarioNuevo.setContrasenia(passwordEncoder.encode(contrasenia));
+        	usuarioNuevo.setRoles(roles);
+        	usuarioNuevo = usuarioRepository.save(usuarioNuevo);
         }
-        return user;
+        return usuarioNuevo;
     }
 
 }

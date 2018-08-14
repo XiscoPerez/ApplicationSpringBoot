@@ -13,23 +13,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "sucursal")
+@Table(name = "sucursales")
 public class Sucursal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_sucursal")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 100)
 	@Column(length = 100, unique = true, nullable = false)
 	private String nombre;
-	
-//	@NotNull
-//	@Size(min = 1, max = 1000)
-//	@Column(length = 1000, columnDefinition = "text", nullable = false)
-//	private String direccion;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_direccion", referencedColumnName="id_direccion", nullable = false)
@@ -50,11 +45,11 @@ public class Sucursal {
 	@Column(length = 50, unique = true, nullable = false)
 	private String telefono;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

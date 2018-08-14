@@ -10,13 +10,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "servicio")
+@Table(name = "servicios")
 public class Servicio {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_servicio")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 100)
@@ -33,11 +33,11 @@ public class Servicio {
 	@Column(length = 100,  nullable = false)
 	private String imagenUrl;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

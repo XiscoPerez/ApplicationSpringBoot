@@ -17,49 +17,53 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "pago")
+@Table(name = "pagos")
 public class Pago {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_pago")
-	private Integer id;
+	@Column(name = "id_pago")
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 50)
 	@Column(length = 50, unique = true, nullable = false)
 	private String numeroTransaccion;
-	
-	@Digits(integer=7, fraction=2)
-	@Column(nullable= false, precision=7, scale=2)
+
+	@Digits(integer = 7, fraction = 2)
+	@Column(nullable = false, precision = 7, scale = 2)
 	private BigDecimal monto;
-	
+
 	@NotNull
 	@Size(min = 1, max = 100)
 	@Column(length = 100, nullable = false)
 	private String concepto;
-	
+
 	@NotNull
 	@Size(min = 1, max = 100)
 	@Column(length = 100, nullable = false)
 	private String comprobantePagoUrl;
-	
+
 	@NotNull
 	private Boolean verificado;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_pago_bancario", referencedColumnName="id_tipo_pago_bancario", nullable = false)
+	@JoinColumn(name = "id_tipo_pago_bancario", referencedColumnName = "id_tipo_pago_bancario", nullable = false)
 	private TipoPagoBancario tipoPagoBancario;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_pago", referencedColumnName="id_tipo_pago", nullable = false)
+	@JoinColumn(name = "id_tipo_pago", referencedColumnName = "id_tipo_pago", nullable = false)
 	private TipoPago tipoPago;
 
-	public Integer getId() {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
+	private Usuario usuario;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -118,7 +122,13 @@ public class Pago {
 	public void setTipoPago(TipoPago tipoPago) {
 		this.tipoPago = tipoPago;
 	}
-	
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

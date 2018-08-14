@@ -1,6 +1,6 @@
 package mx.com.xisco.persistence.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,31 +17,42 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "colonia")
+@Table(name = "colonias")
 public class Colonia {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_colonia")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 100)
 	@Column(length = 100, nullable = false)
 	private String nombre;
 	
+	@NotNull
+	@Size(min = 1, max = 100)
+	@Column(length = 100, nullable = false)
+	private String codigoPostal;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_zona", referencedColumnName="id_zona", nullable = false)
+    @JoinColumn(name = "id_zona", referencedColumnName="id_zona")
 	private Zona zona;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_municipio_delegacion", referencedColumnName="id_municipio_delegacion")
+	private MunicipioDelegacion municipioDelegacion;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "colonia")
-	private List<BienInmueble> BienesInmuebles;
+	private Collection<Direccion> direcciones;
+	
+	
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -61,15 +72,13 @@ public class Colonia {
 		this.zona = zona;
 	}
 
-	public List<BienInmueble> getBienesInmuebles() {
-		return BienesInmuebles;
+	public Collection<Direccion> getDirecciones() {
+		return direcciones;
 	}
 
-	public void setBienesInmuebles(List<BienInmueble> bienesInmuebles) {
-		BienesInmuebles = bienesInmuebles;
+	public void setDirecciones(Collection<Direccion> direcciones) {
+		this.direcciones = direcciones;
 	}
-	
-	
-	
 
+	
 }

@@ -10,51 +10,38 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "pregunta_frecuente")
+@Table(name = "preguntas_frecuentes")
 public class PreguntaFrecuente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_pregunta_frecuente")
-	private Integer id;
+	private Long id;
 
-	@NotNull
-	@Size(min = 1, max = 100)
-	@Column(length = 100, nullable = false)
-	private String titulo;
-	
 	@NotNull
 	@Size(min = 1, max = 500)
 	@Column(length = 500, columnDefinition = "text", nullable = false)
-	private String descripcion;
+	private String pregunta;
 	
 	@NotNull
 	@Size(min = 1, max = 2000)
 	@Column(length = 2000, columnDefinition = "text", nullable = false)
 	private String respuesta;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getPregunta() {
+		return pregunta;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setPregunta(String pregunta) {
+		this.pregunta = pregunta;
 	}
 
 	public String getRespuesta() {
