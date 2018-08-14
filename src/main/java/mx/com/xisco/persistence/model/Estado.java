@@ -1,6 +1,6 @@
 package mx.com.xisco.persistence.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,13 +15,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "estado")
+@Table(name = "estados")
 public class Estado {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_estado")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 50)
@@ -29,13 +29,13 @@ public class Estado {
 	private String nombre;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estado")
-	private List<MunicipioDelegacion> municipiosDelegaciones;
+	private Collection<MunicipioDelegacion> municipiosDelegaciones;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -47,11 +47,11 @@ public class Estado {
 		this.nombre = nombre;
 	}
 
-	public List<MunicipioDelegacion> getMunicipiosDelegaciones() {
+	public Collection<MunicipioDelegacion> getMunicipiosDelegaciones() {
 		return municipiosDelegaciones;
 	}
 
-	public void setMunicipiosDelegaciones(List<MunicipioDelegacion> municipiosDelegaciones) {
+	public void setMunicipiosDelegaciones(Collection<MunicipioDelegacion> municipiosDelegaciones) {
 		this.municipiosDelegaciones = municipiosDelegaciones;
 	}
 	

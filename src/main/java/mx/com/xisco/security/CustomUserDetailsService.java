@@ -8,23 +8,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import mx.com.xisco.persistence.model.User;
-import mx.com.xisco.persistence.repository.UserRepository;
+import mx.com.xisco.persistence.model.Usuario;
+import mx.com.xisco.persistence.repository.UsuarioRepository;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(final String username) {
-        Optional<User> user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(final String usuario) {
+        Optional<Usuario> user = userRepository.findByUsuario(usuario);
         if (user.isPresent()) {
             user.get().getRoles();
             return new CustomUserDetails(user.get());
         } else {
-            throw new UsernameNotFoundException("No user present with username: " + username);
+            throw new UsernameNotFoundException("No user present with username: " + usuario);
         }
     }
 

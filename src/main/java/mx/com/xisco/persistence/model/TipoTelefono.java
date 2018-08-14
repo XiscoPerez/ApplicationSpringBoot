@@ -10,24 +10,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "tipo_telefono")
+@Table(name = "tipos_telefonos")
 public class TipoTelefono {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tipo_telefono")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 50)
 	@Column(length = 50, unique = true, nullable = false)
 	private String nombre;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

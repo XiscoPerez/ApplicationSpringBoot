@@ -13,59 +13,45 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "comentario")
+@Table(name = "comentarios")
 public class Comentario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_comentario")
-	private Integer id;
+	private Long id;
 
 	@NotNull
-	@Size(min = 1, max = 4000)
-	@Column(length = 4000, columnDefinition = "text", nullable = false)
-	private String descripcion;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, unique = true, nullable = false)
-	private String evidenciaImagenUrl;
+	@Size(min = 1, max = 2000)
+	@Column(length = 2000, nullable = false, columnDefinition = "text")
+	private String comentario;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ticket", referencedColumnName="id_ticket", nullable = false)
-	private Ticket ticket;
+    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+	private Usuario usuario;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getComentario() {
+		return comentario;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
-	public String getEvidenciaImagenUrl() {
-		return evidenciaImagenUrl;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setEvidenciaImagenUrl(String evidenciaImagenUrl) {
-		this.evidenciaImagenUrl = evidenciaImagenUrl;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-
-	public Ticket getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
-
 	
 }

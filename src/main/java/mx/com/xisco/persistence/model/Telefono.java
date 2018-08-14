@@ -14,13 +14,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "telefono")
+@Table(name = "telefonos")
 public class Telefono {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_telefono")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 50)
@@ -32,14 +32,14 @@ public class Telefono {
 	private TipoTelefono tipoTelefono;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user", referencedColumnName="id", nullable = false)
-	private User user;
+    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+	private Usuario usuario;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -59,12 +59,12 @@ public class Telefono {
 		this.tipoTelefono = tipoTelefono;
 	}
 
-	public User getUser() {
-		return user;
+	public Usuario getUsuarior() {
+		return usuario;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

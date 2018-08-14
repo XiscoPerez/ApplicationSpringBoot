@@ -1,6 +1,6 @@
 package mx.com.xisco.persistence.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,18 +18,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_ticket")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 100)
 	@Column(length = 100, nullable = false)
 	private String titulo;
+	
+	@NotNull
+	@Size(min = 1, max = 4000)
+	@Column(length = 4000, columnDefinition = "text", nullable = false)
+	private String descripcion;
 	
 	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estatus_ticket", referencedColumnName="id_estatus_ticket", nullable = false)
@@ -40,17 +45,17 @@ public class Ticket {
 	private TipoTicket tipoTicket;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user", referencedColumnName="id", nullable = false)
-	private User usuarioAsignado;
+    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+	private Usuario usuarioAsignado;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ticket")
-	private List<Comentario> comentarios;
+	private Collection<CambioTicket> cambios;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -60,6 +65,14 @@ public class Ticket {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public EstatusTicket getEstatusTicket() {
@@ -78,22 +91,20 @@ public class Ticket {
 		this.tipoTicket = tipoTicket;
 	}
 
-	public User getUsuarioAsignado() {
+	public Usuario getUsuarioAsignado() {
 		return usuarioAsignado;
 	}
 
-	public void setUsuarioAsignado(User usuarioAsignado) {
+	public void setUsuarioAsignado(Usuario usuarioAsignado) {
 		this.usuarioAsignado = usuarioAsignado;
 	}
 
-	public List<Comentario> getComentarios() {
-		return comentarios;
+	public Collection<CambioTicket> getCambios() {
+		return cambios;
 	}
 
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
+	public void setCambios(Collection<CambioTicket> cambios) {
+		this.cambios = cambios;
 	}
-	
-	
 
 }

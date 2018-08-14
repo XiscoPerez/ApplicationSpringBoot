@@ -1,7 +1,7 @@
 package mx.com.xisco.persistence.model;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,22 +22,21 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "bien_inmueble")
+@Table(name = "bienes_inmuebles")
 public class BienInmueble {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_bien_inmueble")
-	private Integer id;
+	private Long id;
 
 	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, unique = true, nullable = false)
+	@Size(min = 1, max = 200)
+	@Column(length = 200, unique = true, nullable = false)
 	private String nombre;
 	
 	@Min(value = 1)
 	@Max(value = 31)
-	@Size(min = 1, max = 31)
 	@Column(nullable= false) 
 	private Integer diaCuotaOrdinaria;
 	
@@ -46,60 +45,30 @@ public class BienInmueble {
 	private BigDecimal montoCuotaOrdinaria;
 	
 	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
+	@Size(min = 1, max = 100)
+	@Column(length = 100, nullable = false)
 	private String imagenUrl;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String nombreResponsable;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String nombreAsociacion;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String rfc;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String telefonoAsociacion;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String correoAsociacion;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, nullable = false)
-	private String numCuentaAsociacion;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_direccion", referencedColumnName="id_direccion", nullable = false)
 	private Direccion direccion;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_colonia", referencedColumnName="id_colonia", nullable = false)
-	private Colonia colonia;
-	
 	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user", referencedColumnName="id", nullable = false)
-	private User administrador;
+    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+	private Usuario administrador;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bienInmueble")
-	private List<Notificacion> notificaciones;
+	private Collection<Notificacion> notificaciones;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_datos_adicionales", referencedColumnName="id_datos_adicionales")
+    private DatosAdicionales datosAdicionales;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -135,53 +104,6 @@ public class BienInmueble {
 		this.imagenUrl = imagenUrl;
 	}
 
-	public String getNombreResponsable() {
-		return nombreResponsable;
-	}
-
-	public void setNombreResponsable(String nombreResponsable) {
-		this.nombreResponsable = nombreResponsable;
-	}
-
-	public String getNombreAsociacion() {
-		return nombreAsociacion;
-	}
-
-	public void setNombreAsociacion(String nombreAsociacion) {
-		this.nombreAsociacion = nombreAsociacion;
-	}
-
-	public String getRfc() {
-		return rfc;
-	}
-
-	public void setRfc(String rfc) {
-		this.rfc = rfc;
-	}
-
-	public String getTelefonoAsociacion() {
-		return telefonoAsociacion;
-	}
-
-	public void setTelefonoAsociacion(String telefonoAsociacion) {
-		this.telefonoAsociacion = telefonoAsociacion;
-	}
-
-	public String getCorreoAsociacion() {
-		return correoAsociacion;
-	}
-
-	public void setCorreoAsociacion(String correoAsociacion) {
-		this.correoAsociacion = correoAsociacion;
-	}
-
-	public String getNumCuentaAsociacion() {
-		return numCuentaAsociacion;
-	}
-
-	public void setNumCuentaAsociacion(String numCuentaAsociacion) {
-		this.numCuentaAsociacion = numCuentaAsociacion;
-	}
 
 	public Direccion getDireccion() {
 		return direccion;
@@ -191,32 +113,28 @@ public class BienInmueble {
 		this.direccion = direccion;
 	}
 
-	public Colonia getColonia() {
-		return colonia;
-	}
-
-	public void setColonia(Colonia colonia) {
-		this.colonia = colonia;
-	}
-
-	public User getAdministrador() {
+	public Usuario getAdministrador() {
 		return administrador;
 	}
 
-	public void setAdministrador(User administrador) {
+	public void setAdministrador(Usuario administrador) {
 		this.administrador = administrador;
 	}
 
-	public List<Notificacion> getNotificaciones() {
+	public Collection<Notificacion> getNotificaciones() {
 		return notificaciones;
 	}
 
-	public void setNotificaciones(List<Notificacion> notificaciones) {
+	public void setNotificaciones(Collection<Notificacion> notificaciones) {
 		this.notificaciones = notificaciones;
 	}
-	
-	
-	
-	
+
+	public DatosAdicionales getDatosAdicionales() {
+		return datosAdicionales;
+	}
+
+	public void setDatosAdicionales(DatosAdicionales datosAdicionales) {
+		this.datosAdicionales = datosAdicionales;
+	}
 
 }

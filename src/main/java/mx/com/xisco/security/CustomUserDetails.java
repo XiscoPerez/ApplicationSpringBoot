@@ -8,56 +8,56 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import mx.com.xisco.persistence.model.Role;
-import mx.com.xisco.persistence.model.User;
+import mx.com.xisco.persistence.model.Rol;
+import mx.com.xisco.persistence.model.Usuario;
 
 public class CustomUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-    private final User user;
+    private final Usuario usuario;
 
-    public CustomUserDetails(final User user) {
-        this.user = user;
+    public CustomUserDetails(final Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-            role.getPrivileges().stream().map(p -> new SimpleGrantedAuthority(p.getName())).forEach(authorities::add);
+        for (Rol rol : usuario.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(rol.getNombre()));
+            rol.getPrivilegios().stream().map(p -> new SimpleGrantedAuthority(p.getNombre())).forEach(authorities::add);
         }
         return authorities;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return !user.isAccountExpired();
+        return !usuario.isCuentaExpirada();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !user.isAccountLocked();
+        return !usuario.isCuentaBloqueada();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !user.isCredentialsExpired();
+        return !usuario.isCredencialesExpiradas();
     }
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return usuario.isActivo();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return usuario.getUsuario();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return usuario.getContrasenia();
     }
 
 }

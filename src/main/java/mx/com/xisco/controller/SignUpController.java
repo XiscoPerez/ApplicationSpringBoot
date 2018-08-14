@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import mx.com.xisco.dto.UserDto;
-import mx.com.xisco.service.UserService;
+import mx.com.xisco.service.UsuarioService;
 
 @Controller
 public class SignUpController {
@@ -23,7 +23,7 @@ public class SignUpController {
     private MessageSource messages;
 
     @Autowired
-    private UserService userService;
+    private UsuarioService userService;
 
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String showForm(final UserDto userDto) {

@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import mx.com.xisco.persistence.model.Role;
+import mx.com.xisco.persistence.model.Rol;
 
 @Repository
-public interface RoleRepository extends CrudRepository<Role, String> {
-    Optional<Role> findByName(String name);
+public interface RolRepository extends CrudRepository<Rol, String> {
+    Optional<Rol> findByNombre(String nombre);
 }

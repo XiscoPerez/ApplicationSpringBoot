@@ -1,6 +1,6 @@
 package mx.com.xisco.persistence.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,13 +18,13 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "zona")
+@Table(name = "zonas")
 public class Zona {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_zona")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 100)
@@ -37,17 +37,17 @@ public class Zona {
 	private String codigo;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "zona")
-	private List<Colonia> colonias;
+	private Collection<Colonia> colonias;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_user", referencedColumnName="id", nullable = false)
-    private User user;
+    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+    private Usuario usuario;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -67,20 +67,20 @@ public class Zona {
 		this.codigo = codigo;
 	}
 
-	public List<Colonia> getColonias() {
+	public Collection<Colonia> getColonias() {
 		return colonias;
 	}
 
-	public void setColonias(List<Colonia> colonias) {
+	public void setColonias(Collection<Colonia> colonias) {
 		this.colonias = colonias;
 	}
 
-	public User getUser() {
-		return user;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	
