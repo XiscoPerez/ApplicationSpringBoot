@@ -29,7 +29,7 @@ public class Estado {
 	private String nombre;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estado")
-	private Collection<MunicipioDelegacion> municipiosDelegaciones;
+	private Collection<Municipio> municipiosDelegaciones;
 
 	public Long getId() {
 		return id;
@@ -47,11 +47,11 @@ public class Estado {
 		this.nombre = nombre;
 	}
 
-	public Collection<MunicipioDelegacion> getMunicipiosDelegaciones() {
+	public Collection<Municipio> getMunicipiosDelegaciones() {
 		return municipiosDelegaciones;
 	}
 
-	public void setMunicipiosDelegaciones(Collection<MunicipioDelegacion> municipiosDelegaciones) {
+	public void setMunicipiosDelegaciones(Collection<Municipio> municipiosDelegaciones) {
 		this.municipiosDelegaciones = municipiosDelegaciones;
 	}
 	
