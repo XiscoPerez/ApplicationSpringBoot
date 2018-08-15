@@ -16,74 +16,70 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "zonas")
 public class Zona {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_zona")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_zona")
+    private Long id;
 
-	@NotNull
-	@Size(min = 1, max = 100)
-	@Column(length = 100, nullable = false)
-	private String nombre;
-	
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(length = 50, unique = true, nullable = false)
-	private String codigo;
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "zona")
-	private Collection<Colonia> colonias;
-	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_usuario", referencedColumnName="id_usuario", nullable = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(length = 100, nullable = false)
+    private String nombre;
+
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(length = 50, unique = true, nullable = false)
+    private String codigo;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "zona")
+    private Collection<Asentamiento> asentamientos;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
     private Usuario usuario;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setNombre(final String nombre) {
+        this.nombre = nombre;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    public void setCodigo(final String codigo) {
+        this.codigo = codigo;
+    }
 
-	public Collection<Colonia> getColonias() {
-		return colonias;
-	}
+    public Collection<Asentamiento> getAsentamientos() {
+        return asentamientos;
+    }
 
-	public void setColonias(Collection<Colonia> colonias) {
-		this.colonias = colonias;
-	}
+    public void setAsentamientos(final Collection<Asentamiento> asentamientos) {
+        this.asentamientos = asentamientos;
+    }
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	
-	
-	
+    public void setUsuario(final Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }
